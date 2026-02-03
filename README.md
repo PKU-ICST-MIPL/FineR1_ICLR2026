@@ -1,10 +1,17 @@
-<div align="center">
+<!-- PROJECT LOGO -->
 
-# **Fine-R1: Make Multi-modal LLMs Excel in Fine-Grained Visual Recognition by Chain-of-Thought Reasoning (ICLR 2026)**
+<p align="center">
+  <h1 align="center">Fine-R1: Make Multi-modal LLMs Excel in Fine-Grained Visual Recognition by Chain-of-Thought Reasoning</h1>
+  <p align="center">
+    <a href="http://39.108.48.32/mipl/news/news.php?id=EGhehulingxiao"><strong>Hulingxiao He</strong></a>
+    ·
+    <a href="http://39.108.48.32/mipl/news/news.php?id=EGgengzijun"><strong>Zijun Geng</strong></a>
+    ·
+    <a href="http://39.108.48.32/mipl/yuxinpeng/"><strong>Yuxin Peng</strong></a>
+  </p>
+  <h2 align="center">ICLR 2026</h2>
+<div align="center"></div>
 
-</div>
-
-<div align="center">
 
 <!-- [![arXiv](https://img.shields.io/badge/arXiv-2507.06448-b31b1b.svg)](https://arxiv.org/abs/2507.06448) -->
 <!-- [![GitHub](https://img.shields.io/badge/💻%20GitHub-Code-green)](https://github.com/mikewangwzhl/PAPO) -->
