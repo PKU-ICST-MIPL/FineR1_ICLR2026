@@ -13,15 +13,13 @@
 <div align="center"></div>
 
 
-<!-- [![arXiv](https://img.shields.io/badge/arXiv-2507.06448-b31b1b.svg)](https://arxiv.org/abs/2507.06448) -->
-<!-- [![GitHub](https://img.shields.io/badge/💻%20GitHub-Code-green)](https://github.com/mikewangwzhl/PAPO) -->
-<!-- [![Hugging Face](https://img.shields.io/badge/🤗%20Hugging%20Face-Models-yellow)](https://huggingface.co/collections/StevenHH2000/papo-qwen-686d92dd3d43b1ce698f851a)
-[![Hugging Face](https://img.shields.io/badge/🤗%20Hugging%20Face-Data-yellow)](https://huggingface.co/collections/PAPOGalaxy/data-686da53d67664506f652774f) -->
+  <h3 align="center"><a href="https://arxiv.org/abs/2602.07605">Paper</a> | <a href="https://huggingface.co/collections/StevenHH2000/fine-r1">Models</a>
+
 
 </div>
 
 ## 🔥 News 
-- **Feb 2026:** Code, data, and model will be released soon. Please stay tuned!
+- **Feb 2026:** Code, data, and models are released. 
 - **Jan 2026:** Fine-R1 is accepted to ICLR 2026.
 
 ## 🌟 **Key Highlights**
@@ -56,6 +54,90 @@ Policy Optimization (TAPO)**, learning the reasoning process with only few-shot 
 <img src="./static/images/main_results_open.png" alt="Main Results" width="1200"/>
 </div>
 
+## 🚀 **Quick Start**
+
+## **Stage1: CoT SFT**
+
+### **(1) Environment Setup**
+
+Please follow the instructions to set up the training environment: https://github.com/hiyouga/LLaMA-Factory. We recommend creating a new conda environment specifically for this stage to avoid potential package version conflicts.
+
+
+### **(2) Data Preparation**
+
+1. Download and prepare the training images of 6 FGVR datasets:
+  - FGVC-Aircraft ✈️
+  - CaltechUCSD Bird-200 🦤
+  - Stanford Car-196 🚙
+  - Stanford Dog-120  🐕
+  - Flower-102  🌼
+  - Oxford-IIIT Pet-37 🐈
+2. Update image paths in the JSON files `FineR1_ICLR2026/LLaMA-Factory/data/Fine-R1-Stage1-data.json` to point to your image directory.
+
+### **(3) Training**
+
+```bash
+# 3B model
+cd LLaMA-Factory
+bash cot_sft_3b.sh
+
+# 7B model  
+cd LLaMA-Factory
+bash cot_sft_7b.sh
+```
+
+## **Stage2: TAPO**
+
+### **(1) Environment Setup**
+
+#### **Option 1: All-in-one Installation Script**
+```bash
+conda create -n tapo python=3.10
+conda activate tapo
+
+cd TAPO
+bash scripts/install.sh
+```
+
+#### **Option 2: Using pip**
+```bash
+conda create -n tapo python=3.10
+conda activate tapo
+
+cd TAPO
+pip install -e .
+pip install flash-attn==2.7.3 --no-build-isolation
+```
+
+### **(2) Training**
+
+The main training pipeline is adopted from [EasyR1](https://github.com/hiyouga/EasyR1). We support training with different configurations for both `Fine-R1-3B` and `Fine-R1-7B` models:
+
+```bash
+# 3B model
+cd TAPO
+bash examples/tapo/tapo_3b.sh
+
+# 7B model  
+cd TAPO
+bash examples/tapo/tapo_7b.sh
+```
+
+
+## **Performance Evaluation**
+
+We evaluate the models in both closed-world (multi-choice) and open-world (question-answering) FGVR, on both seen and unseen categories.
+
+```bash
+# Closed-world evaluation
+cd eval
+bash scripts/eval_closed.sh
+
+# Open-world evaluation
+cd eval
+bash scripts/eval_open.sh
+```
+
 
 ## 🥰 Acknowledgements
 
@@ -64,19 +146,17 @@ We thank the [PAPO](https://github.com/MikeWangWZHL/PAPO/tree/main), [NoisyRollo
 ## 📝 Citation
 
 ```bibtex
-@inproceedings{
-anonymous2026finer,
-title={Fine-R1: Make Multi-modal {LLM}s Excel in Fine-Grained Visual Recognition by Chain-of-Thought Reasoning},
-author={Anonymous},
-booktitle={The Fourteenth International Conference on Learning Representations},
-year={2026},
-url={https://openreview.net/forum?id=kyzHM557gE}
+@article{he2026finer1,
+  title={Fine-R1: Make Multi-modal LLMs Excel in Fine-Grained Visual Recognition by Chain-of-Thought Reasoning},
+  author={He, Hulingxiao and Geng, Zijun and Peng, Yuxin},
+  journal={arXiv preprint arXiv:2602.07605},
+  year={2026}
 }
 ```
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License.
 
 ---
 

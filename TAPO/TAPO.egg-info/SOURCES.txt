@@ -1,0 +1,9 @@
+pyproject.toml
+setup.py
+TAPO.egg-info/PKG-INFO
+TAPO.egg-info/SOURCES.txt
+TAPO.egg-info/dependency_links.txt
+TAPO.egg-info/entry_points.txt
+TAPO.egg-info/not-zip-safe
+TAPO.egg-info/requires.txt
+TAPO.egg-info/top_level.txt

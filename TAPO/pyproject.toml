@@ -1,0 +1,159 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "TAPO"
+version = "0.1.0"
+description = "Fine-R1: Make Multi-modal LLMs Excel in Fine-Grained Visual Recognition by Chain-of-Thought Reasoning"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+    {name = "TAPO Team"}
+]
+requires-python = ">=3.10"
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+keywords = ["ai", "ml", "deep-learning", "transformers", "llm"]
+
+dependencies = [
+    # Core build dependencies
+    "setuptools>=61.0",
+    "wheel",
+    "ninja",
+    "packaging",
+    
+    # Core ML/AI packages
+    "vllm==0.8.4",
+    "accelerate",
+    "datasets",
+    "numpy",
+    "pandas",
+    "peft",
+    "pillow",
+    "pyarrow>=15.0.0",
+    "transformers==4.51.3",
+    
+    # Configuration and utilities
+    "omegaconf",
+    "codetiming",
+    "wandb",
+    "tensorboard",
+    
+    # Math and data processing
+    "mathruler",
+    "pylatexenc",
+    "qwen-vl-utils",
+    "tensordict",
+    "torchdata",
+    
+    # PyTorch
+    "torch==2.6.0",
+    "torchvision",
+    "torchaudio",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+    "black>=23.0",
+    "isort>=5.0",
+    "flake8>=6.0",
+    "mypy>=1.0",
+    "ruff>=0.1.0",
+]
+docs = [
+    "sphinx>=5.0",
+    "sphinx-rtd-theme>=1.0",
+    "myst-parser>=0.18",
+]
+# Attention optimization dependencies
+cuda-optimized = [
+    "flash-attn==2.7.4.post1",
+    "liger-kernel",
+    "flashinfer-python",
+]
+# All dependencies combined
+all = [
+    "flash-attn==2.7.4.post1",
+    "liger-kernel", 
+    "flashinfer-python",
+]
+
+[project.urls]
+Homepage = "https://github.com/PKU-ICST-MIPL/FineR1_ICLR2026"
+Repository = "https://github.com/PKU-ICST-MIPL/FineR1_ICLR2026"
+Documentation = "https://github.com/PKU-ICST-MIPL/FineR1_ICLR2026/README.md"
+"Bug Tracker" = "https://github.com/PKU-ICST-MIPL/FineR1_ICLR2026/issues"
+
+[project.scripts]
+tapo = "tapo.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["tapo*"]
+exclude = ["tests*"]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 119
+indent-width = 4
+
+[tool.ruff.lint]
+ignore = ["C901", "E501", "E741", "W605", "C408"]
+select = ["C", "E", "F", "I", "W", "RUF022"]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["E402", "F401", "F403", "F811"]
+
+[tool.ruff.lint.isort]
+lines-after-imports = 2
+known-first-party = ["tapo"]
+known-third-party = ["torch", "transformers", "wandb", "vllm"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+
+[tool.black]
+line-length = 119
+target-version = ['py310']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | build
+  | dist
+)/
+'''
+
+[tool.isort]
+profile = "black"
+line_length = 119
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+ensure_newline_before_comments = true
+known_first_party = ["tapo"]
+known_third_party = ["torch", "transformers", "wandb", "vllm"]

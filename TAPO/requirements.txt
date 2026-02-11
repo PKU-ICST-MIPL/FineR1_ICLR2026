@@ -1,0 +1,43 @@
+# Core dependencies
+setuptools>=61.0
+wheel
+ninja
+packaging
+
+# PyTorch with CUDA 12.4
+--extra-index-url https://download.pytorch.org/whl/cu124
+torch==2.6.0+cu124
+torchvision
+torchaudio
+
+# Core ML/AI packages
+vllm==0.8.4
+accelerate
+datasets
+numpy
+pandas
+peft
+pillow
+pyarrow>=15.0.0
+transformers==4.51.3
+
+# Configuration and utilities
+omegaconf
+codetiming
+wandb
+tensorboard
+
+# Math and data processing
+mathruler
+pylatexenc
+qwen-vl-utils
+tensordict==0.9.1
+torchdata
+
+# Attention optimization
+flash-attn==2.7.3
+liger-kernel
+
+# FlashInfer (requires CUDA development tools)
+--extra-index-url https://flashinfer.ai/whl/cu124/torch2.6/
+flashinfer-python
