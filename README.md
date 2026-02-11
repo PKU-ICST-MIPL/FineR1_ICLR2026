@@ -109,7 +109,11 @@ pip install -e .
 pip install flash-attn==2.7.3 --no-build-isolation
 ```
 
-### **(2) Training**
+### **(2) Data Preparation**
+
+Download the training data of stage 2 from [Fine-R1-Stage2-data](https://huggingface.co/datasets/StevenHH2000/Fine-R1-Stage2-data) and put it in `FineR1_ICLR2026/TAPO/data` directory.
+
+### **(3) Training**
 
 The main training pipeline is adopted from [EasyR1](https://github.com/hiyouga/EasyR1). We support training with different configurations for both `Fine-R1-3B` and `Fine-R1-7B` models:
 
