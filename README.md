@@ -111,7 +111,7 @@ pip install flash-attn==2.7.3 --no-build-isolation
 
 ### **(2) Data Preparation**
 
-Download the training data of stage 2 from [Fine-R1-Stage2-data](https://huggingface.co/datasets/StevenHH2000/Fine-R1-Stage2-data) and put it in `FineR1_ICLR2026/TAPO/data` directory.
+Download the training data of stage 2 from [Fine-R1-Stage2-data](https://huggingface.co/datasets/StevenHH2000/Fine-R1-Stage2-data) and unzip it in `FineR1_ICLR2026/TAPO/data` directory.
 
 ### **(3) Training**
 
@@ -130,7 +130,7 @@ bash examples/tapo/tapo_7b.sh
 
 ## **Performance Evaluation**
 
-We evaluate the models in both closed-world (multi-choice) and open-world (question-answering) FGVR, on both seen and unseen categories.
+We evaluate the models in both closed-world (multi-choice) and open-world (question-answering) FGVR, on both seen and unseen categories. Before evaluation, update image paths `image_path` in the JSONL files `FineR1_ICLR2026/eval/data/*.jsonl` to point to your image directory.
 
 ```bash
 # Closed-world evaluation
