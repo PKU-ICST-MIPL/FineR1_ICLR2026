@@ -55,7 +55,7 @@ dependencies = [
     "mathruler",
     "pylatexenc",
     "qwen-vl-utils",
-    "tensordict",
+    "tensordict==0.9.1",
     "torchdata",
     
     # PyTorch
@@ -81,13 +81,13 @@ docs = [
 ]
 # Attention optimization dependencies
 cuda-optimized = [
-    "flash-attn==2.7.4.post1",
+    "flash-attn==2.7.3",
     "liger-kernel",
     "flashinfer-python",
 ]
 # All dependencies combined
 all = [
-    "flash-attn==2.7.4.post1",
+    "flash-attn==2.7.3",
     "liger-kernel", 
     "flashinfer-python",
 ]
