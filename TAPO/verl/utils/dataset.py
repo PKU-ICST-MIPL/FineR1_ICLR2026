@@ -146,7 +146,7 @@ class RLHFDataset(Dataset):
             try:
                 self.dataset = load_dataset(data_path, split=data_split)
             except Exception as e:
-                self.dataset = self._load_papo_dataset(data_path, data_split)
+                self.dataset = self._load_tapo_dataset(data_path, data_split)
 
         self.format_prompt = None
         if format_prompt:
@@ -160,8 +160,8 @@ class RLHFDataset(Dataset):
                 num_proc=filter_overlong_prompts_workers,
             )
 
-    def _load_papo_dataset(self, data_path: str, data_split: str = "train"):
-        """Load PAPO dataset by directly reading parquet files to bypass the 'List' feature type issue"""
+    def _load_tapo_dataset(self, data_path: str, data_split: str = "train"):
+        """Load TAPO dataset by directly reading parquet files to bypass the 'List' feature type issue"""
         try:
             # Get all files in the repository
             api = HfApi()

@@ -41,7 +41,7 @@ from ..utils.checkpoint import CHECKPOINT_TRACKER, remove_obsolete_ckpt
 from ..utils.logger import Tracker
 from ..utils.py_functional import convert_dict_to_str, timer
 from ..utils.seqlen_balancing import get_seqlen_balanced_partitions, log_seqlen_unbalance
-from ..workers.fsdp_workers import FSDPWorker
+from ..workers.fsdp_workers_new import FSDPWorker
 from ..workers.reward import FunctionRewardManager
 from . import core_algos
 from .config import PPOConfig
@@ -50,7 +50,7 @@ from .metrics import compute_data_metrics, compute_throughout_metrics, compute_t
 
 from PIL import Image
 from ..utils.dataset import collate_fn
-from .papo_utils import random_patch_blackening
+from .tapo_utils import random_patch_blackening
 
 
 class Role(IntEnum):
@@ -530,7 +530,7 @@ class RayPPOTrainer:
         self.kl_ctrl_contrastive.update(current_kl=None, n_steps=1)
         return batch
 
-    def _make_batch_data(self, metrics: Dict[str, Any]) -> DataProto:
+    def _make_batch_data(self, metrics: Dict[str, Any], is_noisy) -> DataProto:
         batch = None
         all_metrics = defaultdict(list)
         num_try_make_batch = 0
@@ -549,6 +549,19 @@ class RayPPOTrainer:
                 "video_fps": self.config.data.video_fps,
             }
             new_batch: DataProto = DataProto.from_single_dict(batch_dict, meta_info=meta_info)
+
+            if is_noisy:
+                print("Using prepared image_noisy ...")
+                if "multi_modal_data" not in new_batch.non_tensor_batch:
+                    return new_batch
+                
+                from copy import deepcopy
+                noisy_batch = deepcopy(new_batch)
+
+                for i, item in enumerate(noisy_batch.non_tensor_batch["multi_modal_data"]):
+                    assert "image_noisy" in item, "image_noisy not exists!"
+                    noisy_images_pil = item.pop('image_noisy')  # a list
+                    noisy_batch.non_tensor_batch["multi_modal_data"][i]["images"] = noisy_images_pil
             
             if self.config.algorithm.use_kl_prcp and "multi_modal_data" in new_batch.non_tensor_batch.keys():
                 # take the raw PIL images
@@ -568,7 +581,8 @@ class RayPPOTrainer:
                     aug_multi_modal_data.append({"images": aug_images_pil})
                 # add to new_batch
                 new_batch.non_tensor_batch["aug_multi_modal_data"] = aug_multi_modal_data
-                
+
+
             # pop those keys for generation
             gen_batch = new_batch.pop(
                 batch_keys=["input_ids", "attention_mask", "position_ids"],
@@ -576,8 +590,20 @@ class RayPPOTrainer:
                 meta_info_keys=["min_pixels", "max_pixels", "video_fps"],
             )
 
+            if is_noisy:
+                noisy_gen_batch = noisy_batch.pop(
+                    batch_keys=["input_ids", "attention_mask", "position_ids"],
+                    non_tensor_batch_keys=["raw_prompt_ids", "multi_modal_data", "multi_modal_inputs"],
+                )
+                gen_batch = DataProto.concat([gen_batch, noisy_gen_batch])
+                gen_batch = gen_batch.interleave_batches(2)
+            
             # generate a batch
             gen_batch_output = self.actor_rollout_ref_wg.generate_sequences(gen_batch)
+            gen_batch_output.non_tensor_batch["image_status"] = \
+                np.array(["normal" if (i // self.config.worker.rollout.n) % 2 == 0 \
+                            else "noisy" for i in range(len(gen_batch_output.batch))], dtype=object)
+
 
             if self.config.algorithm.adv_estimator == "remax":
                 gen_baseline_batch = deepcopy(gen_batch)
@@ -597,7 +623,11 @@ class RayPPOTrainer:
                 [str(uuid.uuid4()) for _ in range(len(new_batch.batch))], dtype=object
             )
             # repeat to align with repeated responses in rollout
-            new_batch = new_batch.repeat(repeat_times=self.config.worker.rollout.n, interleave=True)
+            # new_batch = new_batch.repeat(repeat_times=self.config.worker.rollout.n, interleave=True)
+            # new_batch = new_batch.union(gen_batch_output)
+
+            repeat = 2 * self.config.worker.rollout.n if is_noisy else self.config.worker.rollout.n
+            new_batch = new_batch.repeat(repeat_times=repeat, interleave=True)
             new_batch = new_batch.union(gen_batch_output)
 
             # filter group
@@ -625,7 +655,7 @@ class RayPPOTrainer:
                 new_batch = new_batch[kept_sample_idxs]
 
             batch = DataProto.concat([batch, new_batch]) if batch is not None else new_batch
-            current_batch_size = len(batch) // self.config.worker.rollout.n
+            current_batch_size = len(batch) // self.config.worker.rollout.n // 2
             rollout_batch_size = self.config.data.rollout_batch_size
             if current_batch_size < rollout_batch_size:
                 if len(batch) == 0:
@@ -644,7 +674,7 @@ class RayPPOTrainer:
                 if self.config.algorithm.online_filtering:
                     metrics.update({f"reward/{k}": v for k, v in reduce_metrics(all_metrics).items()})
 
-                return batch[: self.config.data.rollout_batch_size * self.config.worker.rollout.n]
+                return batch[: self.config.data.rollout_batch_size * self.config.worker.rollout.n * 2]
 
     def fit(self):
         """
@@ -668,6 +698,7 @@ class RayPPOTrainer:
             if self.config.trainer.val_only:
                 return
 
+        is_noisy = self.config.worker.actor.is_noisy
         self.data_iterator = iter(self.train_dataloader)
         while self.global_step < self.training_steps:
             self.global_step += 1
@@ -677,7 +708,7 @@ class RayPPOTrainer:
                 # make a batch of data
                 with timer("gen", timing_raw):
                     self.actor_rollout_ref_wg.prepare_rollout_engine()
-                    batch = self._make_batch_data(metrics=metrics)
+                    batch = self._make_batch_data(metrics=metrics, is_noisy=is_noisy)
                     self.actor_rollout_ref_wg.release_rollout_engine()
 
                 # balance the number of valid tokens on each dp rank.

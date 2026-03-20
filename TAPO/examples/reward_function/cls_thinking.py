@@ -15,7 +15,6 @@
 import re
 from typing import Any, Dict, List
 
-
 def format_reward(response: str) -> float:
     pattern = re.compile(r"<think>.*?</think>\s*<answer>.*?</answer>", re.DOTALL)
     format_match = re.fullmatch(pattern, response)
@@ -33,6 +32,7 @@ def accuracy_reward(response: str, ground_truth: str) -> float:
     if answer is None:
         return 0.0
     return 1.0 if ground_truth.lower() in answer.lower() else 0.0
+
 
 def compute_score(reward_inputs: List[Dict[str, Any]], format_weight: float = 0.1) -> List[Dict[str, float]]:
     if not isinstance(reward_inputs, list):

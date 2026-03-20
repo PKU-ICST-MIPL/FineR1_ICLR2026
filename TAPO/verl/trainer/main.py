@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os
 import json
 
 import ray
@@ -24,7 +23,7 @@ from ..workers.fsdp_workers_new import FSDPWorker
 from ..workers.reward import BatchFunctionRewardManager, SequentialFunctionRewardManager
 from .config import PPOConfig
 from .data_loader import create_dataloader
-from .ray_trainer_new import RayPPOTrainer, ResourcePoolManager, Role
+from .ray_trainer import RayPPOTrainer, ResourcePoolManager, Role
 
 
 # please make sure main_task is not scheduled on head

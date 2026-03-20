@@ -13,14 +13,19 @@
 <div align="center"></div>
 
 
-  <h3 align="center"><a href="https://arxiv.org/abs/2602.07605">Paper</a> | <a href="https://huggingface.co/collections/StevenHH2000/fine-r1">Models</a>
+  <h3 align="center"><a href="https://arxiv.org/abs/2602.07605">Paper</a> | <a href="https://huggingface.co/collections/StevenHH2000/fine-r1">Models</a> | <a href="https://huggingface.co/datasets/StevenHH2000/Fine-R1-Stage2-data">Data</a>
 
 
 </div>
 
 ## 🔥 News 
-- **Feb 2026:** Code, data, and models are released. 
-- **Jan 2026:** Fine-R1 is accepted to ICLR 2026.
+- **Feb 2026:** Checkpoints after Stage 1 are newly released [here](https://huggingface.co/collections/StevenHH2000/fine-r1). Download and use them for your customized Stage 2 training!
+- **Feb 2026:** 🌼🌼🌼 Code, [data](https://huggingface.co/datasets/StevenHH2000/Fine-R1-Stage2-data), and [models](https://huggingface.co/collections/StevenHH2000/fine-r1) are released now. Welcome to follow our work and give us a star 🌟!
+- **Jan 2026:** 🎉🎉🎉 Fine-R1 is accepted to ICLR 2026! See you in Rio de Janeiro this April!
+
+## 🧠 More Related Research
+- **TARA** (CVPR 2026): using fine-grained category tree to boost hierarchical visual recognition capability of MLLMs. 【[Paper](https://arxiv.org/abs/2603.00431)】【[Code](https://github.com/PKU-ICST-MIPL/TARA_CVPR2026)】
+- **Finedefics** (ICLR 2025): revisiting three quintessential capabilities of MLLMs for FGVR and position of the root cause as a misalignment problem. 【[Paper](https://arxiv.org/abs/2501.15140)】【[Code](https://github.com/PKU-ICST-MIPL/Finedefics_ICLR2025)】
 
 ## 🌟 **Key Highlights**
 
@@ -111,7 +116,8 @@ pip install flash-attn==2.7.3 --no-build-isolation
 
 ### **(2) Data Preparation**
 
-Download the training data of stage 2 from [Fine-R1-Stage2-data](https://huggingface.co/datasets/StevenHH2000/Fine-R1-Stage2-data) and unzip it in `FineR1_ICLR2026/TAPO/data` directory.
+Download the training data of stage 2 from [Fine-R1-Stage2-data](https://huggingface.co/datasets/StevenHH2000/Fine-R1-Stage2-data) and unzip it in `FineR1_ICLR2026/TAPO/data` directory. You can also refer to the data format of [Fine-R1-Stage2-data](https://huggingface.co/datasets/StevenHH2000/Fine-R1-Stage2-data) to create your own customized dataset. Note that the `image_noisy` and `image_aug` should be preprocessed to the same size with the original `images`.
+
 
 ### **(3) Training**
 
@@ -148,13 +154,27 @@ bash scripts/eval_open.sh
 We thank the [PAPO](https://github.com/MikeWangWZHL/PAPO/tree/main), [NoisyRollout](https://github.com/NUS-TRAIL/NoisyRollout/tree/09347ddd88135b83a336a204ecf6353121bbee79), [LlamaFactory](https://github.com/hiyouga/LlamaFactory), and [EasyR1](https://github.com/hiyouga/EasyR1) team for providing the foundational codebase that we adapted to implement Fine-R1. 
 
 ## 📝 Citation
-
+If you find it useful for your research and applications, please cite related papers using this BibTeX:
 ```bibtex
-@article{he2026finer1,
+@article{he2026fine,
   title={Fine-R1: Make Multi-modal LLMs Excel in Fine-Grained Visual Recognition by Chain-of-Thought Reasoning},
   author={He, Hulingxiao and Geng, Zijun and Peng, Yuxin},
   journal={arXiv preprint arXiv:2602.07605},
   year={2026}
+}
+
+@article{he2026taxonomy,
+  title={Taxonomy-Aware Representation Alignment for Hierarchical Visual Recognition with Large Multimodal Models},
+  author={He, Hulingxiao and Tan, Zhi and Peng, Yuxin},
+  journal={arXiv preprint arXiv:2603.00431},
+  year={2026}
+}
+
+@article{he2025analyzing,
+  title={Analyzing and boosting the power of fine-grained visual recognition for multi-modal large language models},
+  author={He, Hulingxiao and Li, Geng and Geng, Zijun and Xu, Jinglin and Peng, Yuxin},
+  journal={arXiv preprint arXiv:2501.15140},
+  year={2025}
 }
 ```
 
