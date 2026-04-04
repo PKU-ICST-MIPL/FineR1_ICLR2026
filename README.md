@@ -13,13 +13,14 @@
 <div align="center"></div>
 
 
-  <h3 align="center"><a href="https://arxiv.org/abs/2602.07605">Paper</a> | <a href="https://huggingface.co/collections/StevenHH2000/fine-r1">Models</a> | <a href="https://huggingface.co/datasets/StevenHH2000/Fine-R1-Stage2-data">Data</a>
+  <h3 align="center"><a href="https://huggingface.co/collections/StevenHH2000/fine-r1">Models (Downloads: 23.7k🔥)</a> | <a href="https://arxiv.org/abs/2602.07605">Paper</a> | <a href="https://huggingface.co/datasets/StevenHH2000/Fine-R1-Stage2-data">Data</a> | <a href="https://iclr.cc/media/PosterPDFs/ICLR%202026/10007729.png?t=1775267978.3778903">Poster</a> | <a href="https://iclr.cc/media/iclr-2026/Slides/10007729.pdf">Slides</a> | <a href="https://iclr.cc/virtual/2026/poster/10007729">Video</a>
 
 
 </div>
 
-## 🔥 News 
-- **Feb 2026:** Checkpoints after Stage 1 are newly released [here](https://huggingface.co/collections/StevenHH2000/fine-r1). Download and use them for your customized Stage 2 training!
+## 🔥 New
+- **Apr 2026:** 🌼🌼🌼 [Poster](https://iclr.cc/media/PosterPDFs/ICLR%202026/10007729.png?t=1775267978.3778903), [slides](https://iclr.cc/media/iclr-2026/Slides/10007729.pdf), and [video](https://iclr.cc/virtual/2026/poster/10007729) are available now.
+- **Feb 2026:** 🌼🌼🌼 Checkpoints after Stage 1 are newly released [here](https://huggingface.co/collections/StevenHH2000/fine-r1). Download and use them for your customized Stage 2 traini
 - **Feb 2026:** 🌼🌼🌼 Code, [data](https://huggingface.co/datasets/StevenHH2000/Fine-R1-Stage2-data), and [models](https://huggingface.co/collections/StevenHH2000/fine-r1) are released now. Welcome to follow our work and give us a star 🌟!
 - **Jan 2026:** 🎉🎉🎉 Fine-R1 is accepted to ICLR 2026! See you in Rio de Janeiro this April!
 
