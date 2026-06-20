@@ -19,6 +19,7 @@
 </div>
 
 ## 🔥 New
+- **Jun 2026:** Added the [Stage1 v1 thinking-with-grounding report](stage1_v1/README.md), reproducibility scripts, option-position audit, shuffled closed-world control, and [Stage2 collaborator handoff](stage1_v1/STAGE2_HANDOFF.md).
 - **Apr 2026:** 🌼🌼🌼 [Poster](https://iclr.cc/media/PosterPDFs/ICLR%202026/10007729.png?t=1775267978.3778903), [slides](https://iclr.cc/media/iclr-2026/Slides/10007729.pdf), and [video](https://iclr.cc/virtual/2026/poster/10007729) are available now.
 - **Feb 2026:** 🌼🌼🌼 Checkpoints after Stage 1 are newly released [here](https://huggingface.co/collections/StevenHH2000/fine-r1). Download and use them for your customized Stage 2 traini
 - **Feb 2026:** 🌼🌼🌼 Code, [data](https://huggingface.co/datasets/StevenHH2000/Fine-R1-Stage2-data), and [models](https://huggingface.co/collections/StevenHH2000/fine-r1) are released now. Welcome to follow our work and give us a star 🌟!

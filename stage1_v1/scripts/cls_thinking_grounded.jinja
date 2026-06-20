@@ -1,0 +1,10 @@
+{{ content | trim }}
+
+Before answering, inspect the image and identify one or two visually verifiable localized cues. Do not assume the class name when selecting a cue, and do not name the final class before the localized evidence.
+
+Write the reasoning inside <think> </think>. Express each cue exactly as:
+<ref>short free-form region description</ref><box>[[x1,y1,x2,y2]]</box>: visible attribute.
+
+The box coordinates must be absolute pixels on the Qwen2.5-VL resized image. Use the smallest coherent region that supports the visible attribute. Do not use a fixed part list, do not duplicate boxes, and do not invent a second cue when only one is reliable.
+
+After the grounded reasoning, provide the final answer once inside <answer> </answer>.
